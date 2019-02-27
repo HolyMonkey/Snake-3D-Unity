@@ -5,13 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    public void OnPlayhandler()
+    public void OnPlayhandler(int LevelNumber)
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(LevelNumber);
     }
 
     public void OnExitHandler()
     {
         Application.Quit(); 
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButton(1))
+        {
+            if (SceneManager.GetActiveScene().name == (SelectLevel.countUnlockedLevel).ToString())
+            {
+                SelectLevel.countUnlockedLevel++;
+            }
+            SceneManager.LoadScene(0);
+        }
     }
 }
