@@ -99,6 +99,7 @@ MonoBehaviour:
   BonePrefab: {fileID: 6181351977556560490, guid: 10d90f6e17a341c42a799bf11be078c8,
     type: 3}
   Speed: 0.08
+  rotationSpeed: 6
   Bone: {fileID: 0}
   OnEat:
     m_PersistentCalls:
