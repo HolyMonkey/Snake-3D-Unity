@@ -64,7 +64,7 @@ public class SnakeController : MonoBehaviour
             _transform.rotation = Quaternion.Euler(0, 0, 0);
             for (int j = 0; j <= Tails.Count - 1; j++)
             {
-                Tails[j].gameObject.transform.position = new Vector3(-2.76f, 1f, 13.48f - BonesDictance * (j));
+                Tails[j].gameObject.transform.position = new Vector3(-2.76f, 1f, 13.48f - BonesDictance * j);
             }
 
         }

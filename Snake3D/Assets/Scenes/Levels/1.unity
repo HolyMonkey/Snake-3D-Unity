@@ -8657,6 +8657,11 @@ PrefabInstance:
       propertyPath: OnEat.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 403227551}
+    - target: {fileID: 6123376142947711157, guid: e0691871ba567f143924b4b8c7855a7a,
+        type: 3}
+      propertyPath: Speed
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0691871ba567f143924b4b8c7855a7a, type: 3}
 --- !u!1001 &602815229
