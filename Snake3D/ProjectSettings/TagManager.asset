@@ -8,6 +8,7 @@ TagManager:
   - FastFood
   - Border
   - Barrier
+  - Wall
   layers:
   - Default
   - TransparentFX

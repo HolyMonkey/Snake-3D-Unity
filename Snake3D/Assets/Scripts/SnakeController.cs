@@ -7,19 +7,26 @@ using UnityEngine.SceneManagement;
 public class SnakeController : MonoBehaviour
 {
     public List<Transform> Tails;
+
     [Range(0,3)]
     public float BonesDictance;
     public GameObject BonePrefab;
+
     [Range(0,4)]
     public float Speed;
+
     [Range(4, 8)]
     public float rotationSpeed;
+
     public GameObject Bone;
     public UnityEvent OnEat;
     private Transform _transform;
 
+    private GameObject _createFood;
+
     private void Start()
     {
+        _createFood = GameObject.Find("GameController");
         _transform = GetComponent<Transform>();
     }
 
@@ -96,7 +103,7 @@ public class SnakeController : MonoBehaviour
             {
                 OnEat.Invoke();
             }
+            _createFood.GetComponent<Food>()._createFood--;
         }
-                    
     }
 }
