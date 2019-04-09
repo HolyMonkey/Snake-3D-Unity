@@ -17,22 +17,21 @@ public class SnakeController : MonoBehaviour
     public float Speed;
 
     [Range(4, 8)]
-    public float rotationSpeed;
+    public float RotationSpeed;
 
     public GameObject Bone;
     public UnityEvent OnEat;
-    private Transform _transform;
-
-    private GameObject _createFood;
-
-    private int _eatFood;
 
     [SerializeField]
     private Text ScoreText;
+    [SerializeField]
+    private GameObject _gameController;
+
+    private Transform _transform;
+    private int _eatFood;    
 
     private void Start()
     {
-        _createFood = GameObject.Find("GameController");
         _transform = GetComponent<Transform>();
     }
 
@@ -40,7 +39,7 @@ public class SnakeController : MonoBehaviour
     {
         ScoreText.text = _eatFood.ToString();
         MoveSnake(_transform.position + _transform.forward * Speed);
-        float angle = Input.GetAxis("Horizontal") * rotationSpeed;
+        float angle = Input.GetAxis("Horizontal") * RotationSpeed;
         _transform.Rotate(0, angle, 0);
     }   
 
@@ -62,8 +61,6 @@ public class SnakeController : MonoBehaviour
                 break;
             }
         }
-
-
         _transform.position = newPosition;
     }
 
@@ -76,11 +73,11 @@ public class SnakeController : MonoBehaviour
             Speed *= 0.9f;
             _transform.position = new Vector3(-2.76f, 1f, 13.48f);
             _transform.rotation = Quaternion.Euler(0, 0, 0);
+
             for (int j = 0; j <= Tails.Count - 1; j++)
             {
                 Tails[j].gameObject.transform.position = new Vector3(-2.76f, 1f, 13.48f - BonesDictance * j);
             }
-
         }
         else
         {
@@ -103,16 +100,18 @@ public class SnakeController : MonoBehaviour
         if (collision.gameObject.tag == "Food")
         {
             Destroy(collision.gameObject);
+
+            _gameController.GetComponent<Food>().Eat(1);
+            _eatFood++;
+
             var bone = Instantiate(BonePrefab);
             Tails.Add(bone.transform);
             Speed *= 1.1f;
+
             if(OnEat != null)
             {
                 OnEat.Invoke();
             }
-            _createFood.GetComponent<Food>().createFood--;
-
-            _eatFood++;
         }
     }
 }

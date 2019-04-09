@@ -19,35 +19,34 @@ public class Food : MonoBehaviour
     private float _zMaxSize = 38.3f;
 
     private Vector3 _curPos;
-    [HideInInspector]
-    public int createFood = 0;
 
     private void Start()
     {
         for (int i = 0; i < _maxFood; i++)
-        {            
-            InstFood();
-        }        
-    }
-
-    private void Update()
-    {
-        if (_maxFood  > createFood)
         {
             InstFood();
         }
     }
 
-    private void InstFood ()
+    private void Update()
+    {
+
+    }
+
+    private void InstFood()
     {
         RandomPos();
         _curFood = Instantiate(foodPref, _curPos, Quaternion.identity) as GameObject;
-        createFood++;
     }
 
     private void RandomPos()
     {
-        _curPos = new Vector3(Random.Range(_xMinSize,_xMaxSize),0.5f,Random.Range(_zMinSize,_zMaxSize));
+        _curPos = new Vector3(Random.Range(_xMinSize, _xMaxSize), 0.5f, Random.Range(_zMinSize, _zMaxSize));
+    }
+
+    public void Eat(int CreateFood)
+    {
+        InstFood();
     }
 
 }
