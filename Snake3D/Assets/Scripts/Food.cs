@@ -20,7 +20,7 @@ public class Food : MonoBehaviour
 
     private Vector3 _curPos;
     [HideInInspector]
-    public int _createFood = 0;
+    public int createFood = 0;
 
     private void Start()
     {
@@ -32,7 +32,7 @@ public class Food : MonoBehaviour
 
     private void Update()
     {
-        if (_maxFood  > _createFood)
+        if (_maxFood  > createFood)
         {
             InstFood();
         }
@@ -42,7 +42,7 @@ public class Food : MonoBehaviour
     {
         RandomPos();
         _curFood = Instantiate(foodPref, _curPos, Quaternion.identity) as GameObject;
-        _createFood++;
+        createFood++;
     }
 
     private void RandomPos()

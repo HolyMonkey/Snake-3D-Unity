@@ -110,7 +110,7 @@ public class SnakeController : MonoBehaviour
             {
                 OnEat.Invoke();
             }
-            _createFood.GetComponent<Food>()._createFood--;
+            _createFood.GetComponent<Food>().createFood--;
 
             _eatFood++;
         }
