@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SnakeController : MonoBehaviour
 {
     public List<Transform> Tails;
 
-    [Range(0,3)]
+    [Range(0, 3)]
     public float BonesDictance;
     public GameObject BonePrefab;
 
-    [Range(0,4)]
+    [Range(0, 4)]
     public float Speed;
 
     [Range(4, 8)]
@@ -24,6 +25,11 @@ public class SnakeController : MonoBehaviour
 
     private GameObject _createFood;
 
+    private int _eatFood;
+
+    [SerializeField]
+    private Text ScoreText;
+
     private void Start()
     {
         _createFood = GameObject.Find("GameController");
@@ -32,6 +38,7 @@ public class SnakeController : MonoBehaviour
 
     private void Update()
     {
+        ScoreText.text = _eatFood.ToString();
         MoveSnake(_transform.position + _transform.forward * Speed);
         float angle = Input.GetAxis("Horizontal") * rotationSpeed;
         _transform.Rotate(0, angle, 0);
@@ -104,6 +111,8 @@ public class SnakeController : MonoBehaviour
                 OnEat.Invoke();
             }
             _createFood.GetComponent<Food>()._createFood--;
+
+            _eatFood++;
         }
     }
 }

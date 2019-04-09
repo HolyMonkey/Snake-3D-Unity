@@ -19,12 +19,10 @@ public class Food : MonoBehaviour
     private float _zMaxSize = 38.3f;
 
     private Vector3 _curPos;
-
-    //public static Food inst;
-
+    [HideInInspector]
     public int _createFood = 0;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
         for (int i = 0; i < _maxFood; i++)
         {            
@@ -32,8 +30,7 @@ public class Food : MonoBehaviour
         }        
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (_maxFood  > _createFood)
         {
