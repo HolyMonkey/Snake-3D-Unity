@@ -101,7 +101,7 @@ public class SnakeController : MonoBehaviour
         {
             Destroy(collision.gameObject);
 
-            _gameController.GetComponent<Food>().Eat(1);
+            _gameController.GetComponent<Food>().Eat();
             _eatFood++;
 
             var bone = Instantiate(BonePrefab);

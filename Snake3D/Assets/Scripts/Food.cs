@@ -44,7 +44,7 @@ public class Food : MonoBehaviour
         _curPos = new Vector3(Random.Range(_xMinSize, _xMaxSize), 0.5f, Random.Range(_zMinSize, _zMaxSize));
     }
 
-    public void Eat(int CreateFood)
+    public void Eat()
     {
         InstFood();
     }
