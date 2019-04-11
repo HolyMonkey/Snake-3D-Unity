@@ -24,16 +24,11 @@ public class Food : MonoBehaviour
     {
         for (int i = 0; i < _maxFood; i++)
         {
-            InstFood();
+            InstantiateFood();
         }
     }
 
-    private void Update()
-    {
-
-    }
-
-    private void InstFood()
+    private void InstantiateFood()
     {
         RandomPos();
         _curFood = Instantiate(foodPref, _curPos, Quaternion.identity) as GameObject;
@@ -46,7 +41,7 @@ public class Food : MonoBehaviour
 
     public void Eat()
     {
-        InstFood();
+        InstantiateFood();
     }
 
 }

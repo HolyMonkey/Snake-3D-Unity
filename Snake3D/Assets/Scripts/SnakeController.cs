@@ -28,16 +28,18 @@ public class SnakeController : MonoBehaviour
     private GameObject _gameController;
 
     private Transform _transform;
-    private int _eatFood;    
+    private int _eatedFoodCount;
+    private Food _eat;
 
     private void Start()
     {
         _transform = GetComponent<Transform>();
+        _eat = _gameController.GetComponent<Food>();
     }
 
     private void Update()
     {
-        ScoreText.text = _eatFood.ToString();
+        ScoreText.text = _eatedFoodCount.ToString();
         MoveSnake(_transform.position + _transform.forward * Speed);
         float angle = Input.GetAxis("Horizontal") * RotationSpeed;
         _transform.Rotate(0, angle, 0);
@@ -101,8 +103,8 @@ public class SnakeController : MonoBehaviour
         {
             Destroy(collision.gameObject);
 
-            _gameController.GetComponent<Food>().Eat();
-            _eatFood++;
+            _eat.Eat();
+            _eatedFoodCount++;
 
             var bone = Instantiate(BonePrefab);
             Tails.Add(bone.transform);
