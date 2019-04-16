@@ -26,15 +26,15 @@ public class SnakeController : MonoBehaviour
     private Text ScoreText;
     [SerializeField]
     private GameObject _gameController;
+    [SerializeField]
+    private FoodPlacer _eat;
 
     private Transform _transform;
     private int _eatedFoodCount;
-    private Food _eat;
 
     private void Start()
     {
         _transform = GetComponent<Transform>();
-        _eat = _gameController.GetComponent<Food>();
     }
 
     private void Update()

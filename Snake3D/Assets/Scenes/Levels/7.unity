@@ -15825,6 +15825,11 @@ PrefabInstance:
       propertyPath: RotationSpeed
       value: 6.18
       objectReference: {fileID: 0}
+    - target: {fileID: 6123376142947711157, guid: e0691871ba567f143924b4b8c7855a7a,
+        type: 3}
+      propertyPath: _eat
+      value: 
+      objectReference: {fileID: 850965700}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0691871ba567f143924b4b8c7855a7a, type: 3}
 --- !u!1001 &1202455789
@@ -21923,7 +21928,7 @@ GameObject:
   - component: {fileID: 1627297948}
   - component: {fileID: 1627297947}
   m_Layer: 5
-  m_Name: Text
+  m_Name: CounterEat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

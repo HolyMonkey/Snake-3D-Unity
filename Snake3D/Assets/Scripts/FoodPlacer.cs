@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Food : MonoBehaviour
+public class FoodPlacer : MonoBehaviour
 {
     [SerializeField]
     private GameObject foodPref;
@@ -18,8 +18,6 @@ public class Food : MonoBehaviour
     private float _zMinSize = 1.5f;
     private float _zMaxSize = 38.3f;
 
-    private Vector3 _curPos;
-
     private void Start()
     {
         for (int i = 0; i < _maxFood; i++)
@@ -30,18 +28,11 @@ public class Food : MonoBehaviour
 
     private void InstantiateFood()
     {
-        RandomPos();
-        _curFood = Instantiate(foodPref, _curPos, Quaternion.identity) as GameObject;
-    }
-
-    private void RandomPos()
-    {
-        _curPos = new Vector3(Random.Range(_xMinSize, _xMaxSize), 0.5f, Random.Range(_zMinSize, _zMaxSize));
+        _curFood = Instantiate(foodPref, new Vector3(Random.Range(_xMinSize, _xMaxSize), 0.5f, Random.Range(_zMinSize, _zMaxSize)), Quaternion.identity) as GameObject;
     }
 
     public void Eat()
     {
         InstantiateFood();
     }
-
 }

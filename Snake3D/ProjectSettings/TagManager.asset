@@ -9,6 +9,7 @@ TagManager:
   - Border
   - Barrier
   - Wall
+  - Counter
   layers:
   - Default
   - TransparentFX
