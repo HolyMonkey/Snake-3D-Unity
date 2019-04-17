@@ -5,7 +5,7 @@ using UnityEngine;
 public class FoodPlacer : MonoBehaviour
 {
     [SerializeField]
-    private GameObject foodPref;
+    private GameObject foodPrefab;
 
     [SerializeField]
     private int _maxFood;
@@ -28,7 +28,7 @@ public class FoodPlacer : MonoBehaviour
 
     private void InstantiateFood()
     {
-        _curFood = Instantiate(foodPref, new Vector3(Random.Range(_xMinSize, _xMaxSize), 0.5f, Random.Range(_zMinSize, _zMaxSize)), Quaternion.identity) as GameObject;
+        _curFood = Instantiate(foodPrefab, new Vector3(Random.Range(_xMinSize, _xMaxSize), 0.5f, Random.Range(_zMinSize, _zMaxSize)), Quaternion.identity) as GameObject;
     }
 
     public void Eat()
