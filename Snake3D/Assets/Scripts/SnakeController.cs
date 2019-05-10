@@ -7,66 +7,81 @@ using UnityEngine.SceneManagement;
 
 public class SnakeController : MonoBehaviour
 {
-   
+
     public List<Transform> Tails;
-    [Range(0,3)]
+    [Range(0, 3)]
     public float BonesDictance;
     public GameObject BonePrefab;
     [Range(0, 4)]
     public float Speed;
     [Range(6, 16)]
-    public float jumpHight = 8;
+    public float jumpHight = 8f;
+    [Range(5, 30)]
     public float gravity = 20f;
-    private bool isJump = false;
-    private float startPosY;
+    public bool isLevelFly = false;
+    public bool isLevelJump = false;
+
+    private bool _isJump = false;
+    private float _startPosY;
     [Range(4, 8)]
     public float rotationSpeed;
-    private GameObject _bone;
     public UnityEvent OnEat;
+
+    private GameObject _bone;
     private Transform _transform;
 
-    private Vector3 moveDirection = Vector3.zero;
-    private int countBone = 0;
+    private Vector3 _moveDirection = Vector3.zero;
+    private int _countBone = 0;
 
-
+    private float _angle = 0.0f;
+    private float _angleUpDown = 0.0f;
+    private float _angleRound = 0.0f;
 
     private void Start()
     {
         _transform = GetComponent<Transform>();
-        startPosY = _transform.position.y;
+        _startPosY = _transform.position.y;
         _bone = new GameObject();
     }
 
     private void Update()
     {
         MoveSnake(_transform.position + _transform.forward * Speed);
-        float angle = Input.GetAxis("Horizontal") * rotationSpeed;
-        _transform.Rotate(0, angle, 0);
+        _angle = Input.GetAxis("Horizontal") * rotationSpeed;
 
-
-        if (_transform.position.y <= startPosY)
+        if (isLevelFly)
         {
-            if (Input.GetButton("Jump"))
-            {
-
-                isJump = true;
-            }
+            FlySnake();
         }
-        JumpSnake();
+
+        if (isLevelJump)
+        {
+            JumpSnake();
+        }
+
+        _transform.Rotate(_angleUpDown, _angle, _angleRound);
         EatBone();
     }
 
-    private void FixedUpdate()
+    private void FlySnake()
     {
-      
+        _angleUpDown = Input.GetAxis("Vertical") * rotationSpeed;
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            _angleRound = 0.3f * rotationSpeed;
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            _angleRound = -0.3f * rotationSpeed;
+        }
     }
 
     private void EatBone()
     {
-
         RaycastHit hit;
-        Vector3 fwd = _transform.TransformDirection(Vector3.forward);
-
+        Vector3 fwd = _transform.forward;
 
         if (Physics.Raycast(_transform.position, fwd, out hit, 0.1f))
         {
@@ -75,79 +90,67 @@ public class SnakeController : MonoBehaviour
                 OnHitBarrier();
             }
         }
-        
-
     }
 
     private void JumpSnake()
     {
-        moveDirection = _transform.position;
-        if (isJump == true && moveDirection.y < jumpHight)
+        if (_transform.position.y <= _startPosY)
         {
-            moveDirection.y += gravity * Time.deltaTime;
+            if (Input.GetButton("Jump"))
+            {
+                _isJump = true;
+            }
         }
-        if (moveDirection.y >= jumpHight)
+
+        _moveDirection = _transform.position;
+        if (_isJump == true && _moveDirection.y < jumpHight)
         {
-            isJump = false;
+            _moveDirection.y += gravity * Time.deltaTime;
         }
-        if (isJump == false && moveDirection.y > startPosY)
+
+        if (_moveDirection.y >= jumpHight)
         {
-            moveDirection.y -= gravity * Time.deltaTime;
+            _isJump = false;
         }
-        if (moveDirection.y < startPosY)
+
+        if (_isJump == false && _moveDirection.y > _startPosY)
         {
-            moveDirection.y = startPosY;
+            _moveDirection.y -= gravity * Time.deltaTime;
         }
-        _transform.position = moveDirection;
+
+        if (_moveDirection.y < _startPosY)
+        {
+            _moveDirection.y = _startPosY;
+        }
+
+        _transform.position = _moveDirection;
     }
 
     private void MoveSnake(Vector3 newPosition)
     {
         float sqrDistance = BonesDictance * BonesDictance;
         Vector3 previousPosition = _transform.position;
+        _bone.transform.position = _transform.position;
+        _bone.transform.rotation = _transform.rotation;
 
-       // GameObject test= new GameObject();
-        
         foreach (var bone in Tails)
         {
-            if (countBone == 0)
+            if ((bone.position - previousPosition).sqrMagnitude > sqrDistance)
             {
 
-                if ((bone.position - previousPosition).sqrMagnitude > sqrDistance)
-                {
-                    var temp = bone.position;
-                    bone.position = previousPosition;
-                    bone.rotation = _transform.rotation;
-                    previousPosition = temp;
-
-                    _bone.transform.position = bone.position;
-                    _bone.transform.rotation = bone.rotation;
-                }
-                else
-                {
-                    break;
-                }
+                var tempP = bone.position;
+                var tempR = bone.rotation;
+                bone.position = _bone.transform.position;
+                bone.rotation = _bone.transform.rotation;
+                previousPosition = tempP;
+                _bone.transform.position = tempP;
+                _bone.transform.rotation = tempR;
             }
             else
             {
-                if ((bone.position - previousPosition).sqrMagnitude > sqrDistance)
-                {
-                    var tempP = bone.position;
-                    var tempR = bone.rotation;
-                    bone.position = _bone.transform.position;
-                    bone.rotation = _bone.transform.rotation;
-                    previousPosition = tempP;
-                    _bone.transform.position = tempP;
-                    _bone.transform.rotation = tempR;
-                }
-                else
-                {
-                    break;
-                }
+                break;
             }
-            countBone++;
-        }
-        countBone = 0;
+        }        
         _transform.position = newPosition;
     }
 
@@ -164,14 +167,12 @@ public class SnakeController : MonoBehaviour
             {
                 Tails[j].gameObject.transform.position = new Vector3(-2.76f, 1f, 13.48f - BonesDictance * j);
             }
-
         }
         else
         {
             SceneManager.LoadScene(0);
         }
     }
-
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -189,13 +190,14 @@ public class SnakeController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             var bone = Instantiate(BonePrefab);
+            bone.transform.position = _bone.transform.position;
+            bone.transform.rotation = _bone.transform.rotation;
             Tails.Add(bone.transform);
             Speed *= 1.1f;
-            if(OnEat != null)
+            if (OnEat != null)
             {
                 OnEat.Invoke();
             }
         }
-                    
     }
 }
