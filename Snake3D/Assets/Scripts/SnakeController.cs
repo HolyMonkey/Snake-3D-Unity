@@ -88,13 +88,37 @@ public class SnakeController : MonoBehaviour
 
         if (collision.gameObject.tag == "Food")
         {
+            // получаем цвет элемента Food
+            Color32 objColor;
+            objColor = collision.gameObject.GetComponent<MeshRenderer>().material.color;
             Destroy(collision.gameObject);
             var bone = Instantiate(BonePrefab);
+            bone.GetComponent<Renderer>().material.color = objColor; // в хвост добавляется элемент цвета objColor
             Tails.Add(bone.transform);
             Speed *= 1.1f;
             if(OnEat != null)
             {
                 OnEat.Invoke();
+            }
+
+            // механика "три в ряд", удаляем три подряд элемента одного цвета из хвоста змейки
+            if (Tails.Count >= 3)
+            {
+                for (int j = 0; j < Tails.Count - 2; j++)
+                {
+                    // начинаем сравнивать цвет трех подряд элементов
+                    if (string.Equals(Tails[j].GetComponent<Renderer>().material.color, Tails[j + 1].GetComponent<Renderer>().material.color) &&
+                        string.Equals(Tails[j].GetComponent<Renderer>().material.color, Tails[j + 2].GetComponent<Renderer>().material.color))
+                    {
+                        // если цвета равны, уничтожаем три элемента и удаляем их из списка с конца
+                        Destroy(Tails[j + 2].gameObject);
+                        Destroy(Tails[j + 1].gameObject);
+                        Destroy(Tails[j].gameObject);
+                        Tails.RemoveAt(j + 2);
+                        Tails.RemoveAt(j + 1);
+                        Tails.RemoveAt(j);
+                    }
+                }
             }
         }
                     
