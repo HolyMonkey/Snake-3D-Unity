@@ -81,9 +81,9 @@ public class SnakeController : MonoBehaviour
     private void EatBone()
     {
         RaycastHit hit;
-        Vector3 fwd = _transform.forward;
+        Vector3 forward = _transform.forward;
 
-        if (Physics.Raycast(_transform.position, fwd, out hit, 0.1f))
+        if (Physics.Raycast(_transform.position, forward, out hit, 0.1f))
         {
             if (hit.collider.tag == "Bone")
             {
