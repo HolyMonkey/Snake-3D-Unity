@@ -21,18 +21,20 @@ public class SnakeController : MonoBehaviour
     private float startPosY;
     [Range(4, 8)]
     public float rotationSpeed;
-    public GameObject Bone;
+    private GameObject _bone;
     public UnityEvent OnEat;
     private Transform _transform;
 
     private Vector3 moveDirection = Vector3.zero;
+    private int countBone = 0;
 
-   
+
 
     private void Start()
     {
         _transform = GetComponent<Transform>();
         startPosY = _transform.position.y;
+        _bone = new GameObject();
     }
 
     private void Update()
@@ -103,25 +105,49 @@ public class SnakeController : MonoBehaviour
     {
         float sqrDistance = BonesDictance * BonesDictance;
         Vector3 previousPosition = _transform.position;
-        
 
+       // GameObject test= new GameObject();
+        
         foreach (var bone in Tails)
         {
-            if((bone.position - previousPosition).sqrMagnitude > sqrDistance)
+            if (countBone == 0)
             {
-                var temp = bone.position;
-                bone.position = previousPosition;
-                bone.rotation = _transform.rotation;
-                previousPosition = temp;
-              
+
+                if ((bone.position - previousPosition).sqrMagnitude > sqrDistance)
+                {
+                    var temp = bone.position;
+                    bone.position = previousPosition;
+                    bone.rotation = _transform.rotation;
+                    previousPosition = temp;
+
+                    _bone.transform.position = bone.position;
+                    _bone.transform.rotation = bone.rotation;
+                }
+                else
+                {
+                    break;
+                }
             }
             else
             {
-                break;
+                if ((bone.position - previousPosition).sqrMagnitude > sqrDistance)
+                {
+                    var tempP = bone.position;
+                    var tempR = bone.rotation;
+                    bone.position = _bone.transform.position;
+                    bone.rotation = _bone.transform.rotation;
+                    previousPosition = tempP;
+                    _bone.transform.position = tempP;
+                    _bone.transform.rotation = tempR;
+                }
+                else
+                {
+                    break;
+                }
             }
+            countBone++;
         }
-
-
+        countBone = 0;
         _transform.position = newPosition;
     }
 
