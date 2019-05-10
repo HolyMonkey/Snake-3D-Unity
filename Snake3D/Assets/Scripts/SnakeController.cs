@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
+
 public class SnakeController : MonoBehaviour
 {
    
@@ -15,7 +16,7 @@ public class SnakeController : MonoBehaviour
     public float Speed;
     [Range(6, 16)]
     public float jumpHight = 8;
-    public float gravity = 0.00001f;
+    public float gravity = 20f;
     private bool isJump = false;
     private float startPosY;
     [Range(4, 8)]
@@ -25,6 +26,8 @@ public class SnakeController : MonoBehaviour
     private Transform _transform;
 
     private Vector3 moveDirection = Vector3.zero;
+
+   
 
     private void Start()
     {
@@ -48,8 +51,31 @@ public class SnakeController : MonoBehaviour
             }
         }
         JumpSnake();
+        EatBone();
     }
 
+    private void FixedUpdate()
+    {
+      
+    }
+
+    private void EatBone()
+    {
+
+        RaycastHit hit;
+        Vector3 fwd = _transform.TransformDirection(Vector3.forward);
+
+
+        if (Physics.Raycast(_transform.position, fwd, out hit, 0.1f))
+        {
+            if (hit.collider.tag == "Bone")
+            {
+                OnHitBarrier();
+            }
+        }
+        
+
+    }
 
     private void JumpSnake()
     {
@@ -77,6 +103,7 @@ public class SnakeController : MonoBehaviour
     {
         float sqrDistance = BonesDictance * BonesDictance;
         Vector3 previousPosition = _transform.position;
+        
 
         foreach (var bone in Tails)
         {
@@ -84,7 +111,9 @@ public class SnakeController : MonoBehaviour
             {
                 var temp = bone.position;
                 bone.position = previousPosition;
+                bone.rotation = _transform.rotation;
                 previousPosition = temp;
+              
             }
             else
             {
@@ -116,6 +145,7 @@ public class SnakeController : MonoBehaviour
             SceneManager.LoadScene(0);
         }
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {
