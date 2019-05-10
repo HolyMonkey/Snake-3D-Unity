@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Barrier4moving : MonoBehaviour
+public class Barriermoving : MonoBehaviour
 {
     [SerializeField] private float speed;
-
+    [SerializeField] private float border1;
+    [SerializeField] private float border2;
     private void Start()
     {
         
@@ -14,11 +15,11 @@ public class Barrier4moving : MonoBehaviour
     private void Update()
     {
         transform.Translate(0, 0, speed * Time.deltaTime);
-        if (transform.position.x > 14)
+        if (transform.position.x > border1)
         {
             speed = -1f;
         }
-        if (transform.position.x < 10.4)
+        if (transform.position.x < border2)
         {
             speed = 1f;
         }
