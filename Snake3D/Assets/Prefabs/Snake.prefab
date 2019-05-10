@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4228997996465665616}
   - component: {fileID: 6123376142947711152}
   - component: {fileID: 1612529244832458368}
+  - component: {fileID: 5755867000285225944}
   m_Layer: 0
   m_Name: Snake
   m_TagString: Untagged
@@ -99,6 +100,9 @@ MonoBehaviour:
   BonePrefab: {fileID: 6181351977556560490, guid: 10d90f6e17a341c42a799bf11be078c8,
     type: 3}
   Speed: 0.08
+  jumpSpeed: 8
+  gravity: 20
+  speedJ: 6
   rotationSpeed: 6
   Bone: {fileID: 0}
   OnEat:
@@ -157,4 +161,22 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!143 &5755867000285225944
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6123376142947711114}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}

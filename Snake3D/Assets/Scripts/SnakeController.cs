@@ -6,21 +6,30 @@ using UnityEngine.SceneManagement;
 
 public class SnakeController : MonoBehaviour
 {
+   
     public List<Transform> Tails;
     [Range(0,3)]
     public float BonesDictance;
     public GameObject BonePrefab;
-    [Range(0,4)]
+    [Range(0, 4)]
     public float Speed;
+    [Range(6, 16)]
+    public float jumpHight = 8;
+    public float gravity = 0.00001f;
+    private bool isJump = false;
+    private float startPosY;
     [Range(4, 8)]
     public float rotationSpeed;
     public GameObject Bone;
     public UnityEvent OnEat;
     private Transform _transform;
 
+    private Vector3 moveDirection = Vector3.zero;
+
     private void Start()
     {
         _transform = GetComponent<Transform>();
+        startPosY = _transform.position.y;
     }
 
     private void Update()
@@ -28,7 +37,41 @@ public class SnakeController : MonoBehaviour
         MoveSnake(_transform.position + _transform.forward * Speed);
         float angle = Input.GetAxis("Horizontal") * rotationSpeed;
         _transform.Rotate(0, angle, 0);
-    }   
+
+
+        if (_transform.position.y <= startPosY)
+        {
+            if (Input.GetButton("Jump"))
+            {
+
+                isJump = true;
+            }
+        }
+        JumpSnake();
+    }
+
+
+    private void JumpSnake()
+    {
+        moveDirection = _transform.position;
+        if (isJump == true && moveDirection.y < jumpHight)
+        {
+            moveDirection.y += gravity * Time.deltaTime;
+        }
+        if (moveDirection.y >= jumpHight)
+        {
+            isJump = false;
+        }
+        if (isJump == false && moveDirection.y > startPosY)
+        {
+            moveDirection.y -= gravity * Time.deltaTime;
+        }
+        if (moveDirection.y < startPosY)
+        {
+            moveDirection.y = startPosY;
+        }
+        _transform.position = moveDirection;
+    }
 
     private void MoveSnake(Vector3 newPosition)
     {
