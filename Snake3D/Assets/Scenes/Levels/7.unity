@@ -30427,8 +30427,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  border1: 14
-  border2: 10.4
+  xMax: 14
+  xMin: 10.4
 --- !u!1001 &1973023866
 PrefabInstance:
   m_ObjectHideFlags: 0
