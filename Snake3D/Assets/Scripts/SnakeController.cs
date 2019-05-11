@@ -17,6 +17,7 @@ public class SnakeController : MonoBehaviour
     public GameObject Bone;
     public UnityEvent OnEat;
     private Transform _transform;
+    private float timeToTeleport = 0;
 
     private void Start()
     {
@@ -25,10 +26,11 @@ public class SnakeController : MonoBehaviour
 
     private void Update()
     {
+        if (timeToTeleport >= 0) timeToTeleport -= Time.deltaTime;
         MoveSnake(_transform.position + _transform.forward * Speed);
         float angle = Input.GetAxis("Horizontal") * rotationSpeed;
         _transform.Rotate(0, angle, 0);
-    }   
+    }
 
     private void MoveSnake(Vector3 newPosition)
     {
@@ -66,7 +68,6 @@ public class SnakeController : MonoBehaviour
             {
                 Tails[j].gameObject.transform.position = new Vector3(-2.76f, 1f, 13.48f - BonesDictance * j);
             }
-
         }
         else
         {
@@ -76,17 +77,26 @@ public class SnakeController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Barrier")
+        Debug.Log(collision.gameObject.tag);
+        if (collision.gameObject.tag == "Barrier" && timeToTeleport < 0)
         {
-            OnHitBarrier();
+            if (timeToTeleport<0) OnHitBarrier();
         }
 
-        if (collision.gameObject.tag == "Border")
+        else if (collision.gameObject.tag == "Border" && timeToTeleport < 0)
         {
             SceneManager.LoadScene(0);
         }
 
-        if (collision.gameObject.tag == "Food")
+        else if (collision.gameObject.tag == "Portal" && timeToTeleport < 0)
+        {
+            Vector3 _position = new Vector3(_transform.position.x < 0 ? 18.98f  : -18.98f, _transform.position.y, _transform.position.z);
+            Debug.Log(_position);
+            _transform.localPosition= _position;
+            timeToTeleport = 0.5f;
+        }
+
+        else if (collision.gameObject.tag == "Food")
         {
             Destroy(collision.gameObject);
             var bone = Instantiate(BonePrefab);
