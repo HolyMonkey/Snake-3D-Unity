@@ -20,7 +20,4 @@ public class Barriermoving : MonoBehaviour
             speed = 1f;
         }
     }
-
-        
-  
 }
