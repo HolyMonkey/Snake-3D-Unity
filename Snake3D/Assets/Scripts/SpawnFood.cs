@@ -13,7 +13,7 @@ public class SpawnFood : MonoBehaviour
     public void spawnFoodObject()
     {
         cloneFood = Instantiate(prefabFood, transform);
-        Vector3 posClone = new Vector3(Random.Range(-16.71f, 16.71f),1, Random.Range(-17.9f, 17.9f));
+        Vector3 posClone = new Vector3((int)(Random.Range(-16.71f, 16.71f)),1, (int)(Random.Range(-17.9f, 17.9f)));
         cloneFood.transform.localPosition = posClone;
     }
 }
