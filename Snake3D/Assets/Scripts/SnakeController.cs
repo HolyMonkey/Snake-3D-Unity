@@ -53,7 +53,7 @@ public class SnakeController : MonoBehaviour
         _transform.position = newPosition;
     }
 
-    private void OnHitBarrier()
+    protected void OnHitBarrier()
     {
         if (Tails.Count >= 2)
         {
@@ -74,7 +74,7 @@ public class SnakeController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Barrier")
         {
