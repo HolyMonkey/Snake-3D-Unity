@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class SpawnFood : MonoBehaviour
 {
-    public GameObject prefabFood;
-    private GameObject cloneFood;
+    public GameObject PrefabFood;
+    public Transform ObjectTopRightBorder, ObjectBotLeftBorder;
+    private GameObject _cloneFood;
+
     private void Start()
     {
-        spawnFoodObject();
+        SpawnFoodObject();
     }
-    public void spawnFoodObject()
+
+    public void SpawnFoodObject()
     {
-        cloneFood = Instantiate(prefabFood, transform);
-        Vector3 posClone = new Vector3((int)(Random.Range(-16.71f, 16.71f)),1, (int)(Random.Range(-17.9f, 17.9f)));
-        cloneFood.transform.localPosition = posClone;
+        _cloneFood = Instantiate(PrefabFood, transform);
+        Vector3 positionClone = new Vector3(
+            Random.Range(ObjectBotLeftBorder.localPosition.x, ObjectTopRightBorder.localPosition.x),
+            1,
+            Random.Range(ObjectBotLeftBorder.localPosition.z, ObjectTopRightBorder.localPosition.z));
+        _cloneFood.transform.localPosition = positionClone;
     }
 }
