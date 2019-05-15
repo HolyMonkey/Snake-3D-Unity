@@ -17,7 +17,8 @@ public class SnakeController : MonoBehaviour
     public GameObject Bone;
     public UnityEvent OnEat;
     private Transform _transform;
-    private float timeToTeleport = 0;
+    [SerializeField]public float timeToTeleport = 0;
+
 
     private void Start()
     {
@@ -77,7 +78,6 @@ public class SnakeController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.tag == "Barrier" && timeToTeleport < 0)
         {
             if (timeToTeleport<0) OnHitBarrier();
@@ -88,13 +88,6 @@ public class SnakeController : MonoBehaviour
             SceneManager.LoadScene(0);
         }
 
-        else if (collision.gameObject.tag == "Portal" && timeToTeleport < 0)
-        {
-            Vector3 _position = new Vector3(_transform.position.x < 0 ? 18.98f  : -18.98f, _transform.position.y, _transform.position.z);
-            Debug.Log(_position);
-            _transform.localPosition= _position;
-            timeToTeleport = 0.5f;
-        }
 
         else if (collision.gameObject.tag == "Food")
         {
