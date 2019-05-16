@@ -37,8 +37,7 @@ public class FoodMove : MonoBehaviour
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Border")
-        {
-            Debug.Log("Столкновение с препятствием!");
+        {            
             getNewPosition();
         }        
     }
