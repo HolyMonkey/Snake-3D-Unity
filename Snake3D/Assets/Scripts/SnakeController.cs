@@ -17,8 +17,8 @@ public class SnakeController : MonoBehaviour
     public GameObject Bone;
     public UnityEvent OnEat;
     private Transform _transform;
-    [SerializeField]public float timeToTeleport = 0;
 
+    public float TimeToTeleport { get; set; }
 
     private void Start()
     {
@@ -27,7 +27,7 @@ public class SnakeController : MonoBehaviour
 
     private void Update()
     {
-        if (timeToTeleport >= 0) timeToTeleport -= Time.deltaTime;
+        if (TimeToTeleport >= 0) TimeToTeleport -= Time.deltaTime;
         MoveSnake(_transform.position + _transform.forward * Speed);
         float angle = Input.GetAxis("Horizontal") * rotationSpeed;
         _transform.Rotate(0, angle, 0);
@@ -78,12 +78,12 @@ public class SnakeController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Barrier" && timeToTeleport < 0)
+        if (collision.gameObject.tag == "Barrier" && TimeToTeleport < 0)
         {
-            if (timeToTeleport<0) OnHitBarrier();
+            if (TimeToTeleport < 0) OnHitBarrier();
         }
 
-        else if (collision.gameObject.tag == "Border" && timeToTeleport < 0)
+        else if (collision.gameObject.tag == "Border" && TimeToTeleport < 0)
         {
             SceneManager.LoadScene(0);
         }
