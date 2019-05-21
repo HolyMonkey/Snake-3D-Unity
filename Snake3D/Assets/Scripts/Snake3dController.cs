@@ -278,15 +278,9 @@ public class Snake3dController : MonoBehaviour
         RaycastHit hitUp;
         RaycastHit hitDown;
 
-        var upZ = new Vector3(0, 0, 1.2f);
-        var upRay = transform.forward * 0.01f + (upZ.z * transform.up);
-
-        var downZ = new Vector3(0, 0, -1.2f);
-        var dowmRay = transform.forward * 0.01f + (downZ.z * transform.up);
-
         //Проверка лучей
-        //Debug.DrawRay(transform.position, upRay, Color.green, 1f, false);
-        //Debug.DrawRay(transform.position, dowmRay, Color.yellow, 1f, false);
+        //Debug.DrawRay(transform.position, transform.up, Color.green, 1f, false);
+        //Debug.DrawRay(transform.position, -transform.up, Color.yellow, 1f, false);
         //Debug.DrawRay(transform.position, transform.forward, Color.blue, 1f, false);
 
         if (isRotate == false)
@@ -303,7 +297,7 @@ public class Snake3dController : MonoBehaviour
                 isBarrierForward = false;
             }
 
-            if (Physics.Raycast(transform.position, upRay, out hitUp, 1f))
+            if (Physics.Raycast(transform.position, transform.up, out hitUp, 1f))
             {
                 if (hitUp.collider.tag == "Barrier")
                 {
@@ -315,7 +309,7 @@ public class Snake3dController : MonoBehaviour
                 isBarrierUp = false;
             }
 
-            if (Physics.Raycast(transform.position, dowmRay, out hitDown, 1f))
+            if (Physics.Raycast(transform.position, -transform.up, out hitDown, 1f))
             {
                 if (hitDown.collider.tag == "Barrier")
                 {
@@ -405,5 +399,4 @@ public class Snake3dController : MonoBehaviour
             SceneManager.LoadScene(0);
         }
     }
-
 }
