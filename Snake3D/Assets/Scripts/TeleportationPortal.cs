@@ -9,11 +9,11 @@ public class TeleportationPortal : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Transform _collisionTransform = collision.transform;
-            if (_collisionTransform.GetComponent<SnakeController>().Teleport() < 0)
+            if (_collisionTransform.GetComponent<TeleportationDelay>().TeleportDelay() < 0)
             {
                 Vector3 _position = new Vector3(_collisionTransform.position.x < 0 ? 18.98f : -18.98f, _collisionTransform.position.y, _collisionTransform.position.z);
                 _collisionTransform.localPosition = _position;
-                _collisionTransform.GetComponent<SnakeController>().Teleport(0.1f);
+                _collisionTransform.GetComponent<TeleportationDelay>().TeleportDelay(0.1f);
             }
         }
     }
