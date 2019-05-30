@@ -17,12 +17,12 @@ public class SnakeController : MonoBehaviour
     public GameObject Bone;
     public UnityEvent OnEat;
     private Transform _transform;
-    private TeleportationDelay _teleportationDelay;
+    private Ghost _isGhost;
     
     private void Start()
     {
         _transform = GetComponent<Transform>();
-        _teleportationDelay = GetComponent<TeleportationDelay>();
+        _isGhost = GetComponent<Ghost>();
     }
 
     private void Update()
@@ -78,12 +78,12 @@ public class SnakeController : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Barrier" && _teleportationDelay.TeleportDelay() < 0)
+        if (collision.gameObject.tag == "Barrier" && _isGhost.IsGhost())
         {
             OnHitBarrier();
         }
 
-        if (collision.gameObject.tag == "Border" && _teleportationDelay.TeleportDelay() < 0)
+        if (collision.gameObject.tag == "Border" && _isGhost.IsGhost())
         {
             SceneManager.LoadScene(0);
         }
