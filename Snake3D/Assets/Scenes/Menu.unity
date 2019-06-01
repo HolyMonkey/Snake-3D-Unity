@@ -967,11 +967,7 @@ RectTransform:
   - {fileID: 622654283}
   - {fileID: 1961341444}
   - {fileID: 1750649006}
-<<<<<<< HEAD
-  - {fileID: 784000319}
-=======
   - {fileID: 478056637}
->>>>>>> master
   m_Father: {fileID: 65960942}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
