@@ -21,7 +21,6 @@ public class SelectLevel : MonoBehaviour
                 transform.GetChild(i).GetComponent<Image>().sprite = unlockedIcon;
                 transform.GetChild(i).GetComponent<Button>().interactable = true;
             }
-
             else
             {
                 transform.GetChild(i).GetComponent<Image>().sprite = lockedIcon;
