@@ -9,7 +9,7 @@ public class SceneLoadButton : MonoBehaviour
     public Image ImageScene;
     public Text ButtonText;
 
-    public void SetSceneInformation(SceneInformation scene)
+    public void SetScene(SceneInformation scene)
     {
         _informationScene = scene;
     }

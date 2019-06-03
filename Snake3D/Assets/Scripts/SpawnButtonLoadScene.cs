@@ -10,12 +10,12 @@ public class SpawnButtonLoadScene : MonoBehaviour
 
     private void Awake()
     {
-        foreach (SceneInformation scene in ListScenes.ListScene)
+        foreach (SceneInformation scene in ListScenes.Scenes)
         {
             if (scene.IdScene >0 && scene.IdScene < SceneManager.sceneCountInBuildSettings)
             {
                 GameObject buttonClone = Instantiate(PrefabButton, transform);
-                buttonClone.SendMessage("SetImageAndText", scene);
+                buttonClone.SendMessage("SetScene", scene);
             }
         }
     }
