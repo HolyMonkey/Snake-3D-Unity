@@ -15,7 +15,7 @@ public class SpawnButtonLoadScene : MonoBehaviour
             if (scene.IdScene >0 && scene.IdScene < SceneManager.sceneCountInBuildSettings)
             {
                 GameObject buttonClone = Instantiate(PrefabButton, transform);
-                buttonClone.SendMessage("SetScene", scene);
+                buttonClone.GetComponent<SceneLoadButton>().SetScene(scene);
             }
         }
     }
