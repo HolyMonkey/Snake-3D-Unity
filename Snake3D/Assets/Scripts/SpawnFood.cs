@@ -29,7 +29,6 @@ public class SpawnFood : MonoBehaviour
 	}
 
 	public void Update() {
-		// Если включен таймер обратного отчета уменьшаем альфа канал до 0
 		if(isCountdown) {
 			if (_alpha > 0) {
 				_renderer.material.color = new Color(0, 1f, 0, _alpha);
